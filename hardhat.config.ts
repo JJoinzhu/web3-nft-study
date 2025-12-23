@@ -1,5 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "hardhat-deploy";
+import "hardhat-deploy-ethers";
 import path from "path";
 
 const config: HardhatUserConfig = {
@@ -10,6 +12,11 @@ const config: HardhatUserConfig = {
         enabled: true,
         runs: 200,
       },
+    },
+  },
+  namedAccounts: {
+    firstAccount: {
+      default: 0,
     },
   },
   paths: {

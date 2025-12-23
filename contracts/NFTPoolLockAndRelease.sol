@@ -43,17 +43,12 @@ contract NFTPoolLockAndRelease is CCIPReceiver, OwnerIsCreator {
     uint256 fees
   );
 
-  // Event emitted when a message is received from another chain.
-  event MessageReceived(
-    // The unique ID of the CCIP message.
-    // The chain selector of the source chain.
-    // The address of the sender from the source chain.
-    // The text that was received.
-    bytes32 indexed messageId,
-    uint64 indexed sourceChainSelector,
-    address sender,
-    string text
-  );
+  event TokenUnlocked(uint256 indexed tokenId, address newOwner);
+
+  struct RequestData {
+    uint256 tokenId;
+    address newOwner;
+  }
 
   bytes32 private s_lastReceivedMessageId; // Store the last received messageId.
   string private s_lastReceivedText; // Store the last received text.
@@ -81,10 +76,11 @@ contract NFTPoolLockAndRelease is CCIPReceiver, OwnerIsCreator {
     address newOwner,
     uint64 chainSelector,
     address receiver
-  ) public returns (bytes32 messageId) {
+  ) public returns (bytes32) {
     nft.transferFrom(msg.sender, address(this), tokenId);
     bytes memory payload = abi.encode(tokenId, newOwner);
     bytes32 messageId = sendMessagePayLINK(chainSelector, receiver, payload);
+
     return messageId;
   }
 
@@ -130,15 +126,13 @@ contract NFTPoolLockAndRelease is CCIPReceiver, OwnerIsCreator {
   function _ccipReceive(
     Client.Any2EVMMessage memory any2EvmMessage // source chain and sender are allowlisted
   ) internal override {
-    s_lastReceivedMessageId = any2EvmMessage.messageId; // fetch the messageId
-    s_lastReceivedText = abi.decode(any2EvmMessage.data, (string)); // abi-decoding of the sent text
+    RequestData memory rd = abi.decode(any2EvmMessage.data, (RequestData));
+    uint256 tokenId = rd.tokenId;
+    address newOwner = rd.newOwner;
 
-    emit MessageReceived(
-      any2EvmMessage.messageId,
-      any2EvmMessage.sourceChainSelector, // fetch the source chain identifier (aka selector)
-      abi.decode(any2EvmMessage.sender, (address)), // abi-decoding of the sender address,
-      abi.decode(any2EvmMessage.data, (string))
-    );
+    nft.transferFrom(address(this), newOwner, tokenId);
+
+    emit TokenUnlocked(tokenId, newOwner);
   }
 
   /// @notice Construct a CCIP message.

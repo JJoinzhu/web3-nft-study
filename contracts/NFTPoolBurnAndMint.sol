@@ -43,17 +43,7 @@ contract NFTPoolBurnAndMint is CCIPReceiver, OwnerIsCreator {
     uint256 fees
   );
 
-  // Event emitted when a message is received from another chain.
-  event MessageReceived(
-    // The unique ID of the CCIP message.
-    // The chain selector of the source chain.
-    // The address of the sender from the source chain.
-    // The text that was received.
-    bytes32 indexed messageId,
-    uint64 indexed sourceChainSelector,
-    address sender,
-    string text
-  );
+  event TokenMinted(uint256 indexed tokenId, address newOwner);
 
   bytes32 private s_lastReceivedMessageId; // Store the last received messageId.
   string private s_lastReceivedText; // Store the last received text.
@@ -81,13 +71,14 @@ contract NFTPoolBurnAndMint is CCIPReceiver, OwnerIsCreator {
     _;
   }
 
-  function lockAndSendNFT(
+  function burnAndSendNFT(
     uint256 tokenId,
     address newOwner,
     uint64 chainSelector,
     address receiver
-  ) public returns (bytes32 messageId) {
-    nft.transferFrom(msg.sender, address(this), tokenId);
+  ) public returns (bytes32) {
+    wnft.transferFrom(msg.sender, address(this), tokenId);
+    wnft.burn(tokenId);
     bytes memory payload = abi.encode(tokenId, newOwner);
     bytes32 messageId = sendMessagePayLINK(chainSelector, receiver, payload);
     return messageId;
@@ -139,15 +130,9 @@ contract NFTPoolBurnAndMint is CCIPReceiver, OwnerIsCreator {
     uint256 tokenId = rd.tokenId;
     address newOwner = rd.newOwner;
 
-    s_lastReceivedMessageId = any2EvmMessage.messageId; // fetch the messageId
-    s_lastReceivedText = abi.decode(any2EvmMessage.data, (string)); // abi-decoding of the sent text
+    wnft.mintTokenWithSpecificTokenId(newOwner, tokenId);
 
-    emit MessageReceived(
-      any2EvmMessage.messageId,
-      any2EvmMessage.sourceChainSelector, // fetch the source chain identifier (aka selector)
-      abi.decode(any2EvmMessage.sender, (address)), // abi-decoding of the sender address,
-      abi.decode(any2EvmMessage.data, (string))
-    );
+    emit TokenMinted(tokenId, newOwner);
   }
 
   /// @notice Construct a CCIP message.
