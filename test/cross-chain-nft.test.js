@@ -42,3 +42,19 @@ describe("source chain -> destination chain", function () {
     expect(owner).to.equal(firstAccount);
   });
 });
+
+// destination chain -> source chain
+describe("destination chain -> source chain", function () {
+  it("1. test if user can burn an NFT on destination chain and send ccip message to source chain", async function () {
+    await wrappedNft.approve(NFTPoolBurnAndMint.target, 0);
+    await ccipSimulator.requestLinkFromFaucet(NFTPoolBurnAndMint, hre.ethers.parseEther("10"));
+    await NFTPoolBurnAndMint.burnAndSendNFT(0, firstAccount, chainSelector, NFTPoolLockAndRelease.target);
+    const totalSupply = await wrappedNft.totalSupply();
+    expect(totalSupply).to.equal(0);
+  });
+
+  it("2. test if user can unlock an NFT on source chain", async function () {
+    const owner = await nft.ownerOf(0);
+    expect(owner).to.equal(firstAccount);
+  });
+});

@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
-    "postinstall": "node scripts/create-junctions.js"
+    "postinstall": "node scripts/create-junctions.cjs"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "hardhat": "^2.28.0"
   },
   "devDependencies": {
+    "@chainlink/env-enc": "^1.0.5",
     "@chainlink/local": "^0.2.7",
     "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
     "@nomicfoundation/hardhat-ethers": "^3.1.3",

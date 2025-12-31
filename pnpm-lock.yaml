@@ -21,6 +21,9 @@ importers:
         specifier: ^2.28.0
         version: 2.28.0(ts-node@10.9.2(@types/node@25.0.3)(typescript@5.9.3))(typescript@5.9.3)
     devDependencies:
+      '@chainlink/env-enc':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@chainlink/local':
         specifier: ^0.2.7
         version: 0.2.7(@types/node@25.0.3)(ethers@6.16.0)
@@ -142,6 +145,10 @@ packages:
   '@chainlink/contracts@1.5.0':
     resolution: {integrity: sha512-1fGJwjvivqAxvVOTqZUEXGR54CATtg0vjcXgSIk4Cfoad2nUhSG/qaWHXjLg1CkNTeOoteoxGQcpP/HiA5HsUA==}
     engines: {node: '>=22', pnpm: '>=10'}
+
+  '@chainlink/env-enc@1.0.5':
+    resolution: {integrity: sha512-hT7W+tEq/kzkf/yn9sIBsMDcpvbuoPk0JPVGfgygfPJxfS3YUyeen6CdEwJ9o+A7GTWxz/ZnPolpUveX3BUCBQ==}
+    hasBin: true
 
   '@chainlink/local@0.2.7':
     resolution: {integrity: sha512-tdsRQEkiZE5nHv35bRcMKSIvIkNl0SV7hQV4wPpimTgIDqe60YH4NAC/j21k7f+ief/oUpyi+gNacvxZBPN9sw==}
@@ -1123,6 +1130,10 @@ packages:
   cliui@7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
 
+  cliui@8.0.1:
+    resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
+    engines: {node: '>=12'}
+
   color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
 
@@ -1277,8 +1288,8 @@ packages:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
     engines: {node: '>=6'}
 
-  era-contracts@git+https://git@github.com:matter-labs/era-contracts.git#446d391d34bdb48255d5f8fef8a8248925fc98b9:
-    resolution: {commit: 446d391d34bdb48255d5f8fef8a8248925fc98b9, repo: git@github.com:matter-labs/era-contracts.git, type: git}
+  era-contracts@https://codeload.github.com/matter-labs/era-contracts/tar.gz/446d391d34bdb48255d5f8fef8a8248925fc98b9:
+    resolution: {tarball: https://codeload.github.com/matter-labs/era-contracts/tar.gz/446d391d34bdb48255d5f8fef8a8248925fc98b9}
     version: 0.1.0
 
   es-define-property@1.0.1:
@@ -2903,6 +2914,10 @@ packages:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
 
+  yargs-parser@21.1.1:
+    resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
+    engines: {node: '>=12'}
+
   yargs-unparser@2.0.0:
     resolution: {integrity: sha512-7pRTIA9Qc1caZ0bZ6RYRGbHJthJWuakf+WmHK0rVeLkNrrGhfoabBNdue6kdINI6r4if7ocq9aD/n7xwKOdzOA==}
     engines: {node: '>=10'}
@@ -2910,6 +2925,10 @@ packages:
   yargs@16.2.0:
     resolution: {integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==}
     engines: {node: '>=10'}
+
+  yargs@17.7.2:
+    resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
+    engines: {node: '>=12'}
 
   yn@3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
@@ -2982,7 +3001,7 @@ snapshots:
       '@openzeppelin/contracts': 4.9.6
       '@openzeppelin/contracts-upgradeable': 4.9.6
       '@scroll-tech/contracts': 0.1.0
-      '@zksync/contracts': era-contracts@git+https://git@github.com:matter-labs/era-contracts.git#446d391d34bdb48255d5f8fef8a8248925fc98b9
+      '@zksync/contracts': era-contracts@https://codeload.github.com/matter-labs/era-contracts/tar.gz/446d391d34bdb48255d5f8fef8a8248925fc98b9
       semver: 7.7.3
     transitivePeerDependencies:
       - bufferutil
@@ -3004,7 +3023,7 @@ snapshots:
       '@openzeppelin/contracts-5.1.0': '@openzeppelin/contracts@5.1.0'
       '@openzeppelin/contracts-upgradeable': 4.9.6
       '@scroll-tech/contracts': 2.0.0
-      '@zksync/contracts': era-contracts@git+https://git@github.com:matter-labs/era-contracts.git#446d391d34bdb48255d5f8fef8a8248925fc98b9
+      '@zksync/contracts': era-contracts@https://codeload.github.com/matter-labs/era-contracts/tar.gz/446d391d34bdb48255d5f8fef8a8248925fc98b9
       semver: 7.7.3
     transitivePeerDependencies:
       - '@types/node'
@@ -3013,6 +3032,10 @@ snapshots:
       - ethers
       - supports-color
       - utf-8-validate
+
+  '@chainlink/env-enc@1.0.5':
+    dependencies:
+      yargs: 17.7.2
 
   '@chainlink/local@0.2.7(@types/node@25.0.3)(ethers@6.16.0)':
     dependencies:
@@ -4398,6 +4421,12 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
+  cliui@8.0.1:
+    dependencies:
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      wrap-ansi: 7.0.0
+
   color-convert@1.9.3:
     dependencies:
       color-name: 1.1.3
@@ -4552,7 +4581,7 @@ snapshots:
 
   env-paths@2.2.1: {}
 
-  era-contracts@git+https://git@github.com:matter-labs/era-contracts.git#446d391d34bdb48255d5f8fef8a8248925fc98b9: {}
+  era-contracts@https://codeload.github.com/matter-labs/era-contracts/tar.gz/446d391d34bdb48255d5f8fef8a8248925fc98b9: {}
 
   es-define-property@1.0.1: {}
 
@@ -6343,6 +6372,8 @@ snapshots:
 
   yargs-parser@20.2.9: {}
 
+  yargs-parser@21.1.1: {}
+
   yargs-unparser@2.0.0:
     dependencies:
       camelcase: 6.3.0
@@ -6359,6 +6390,16 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.9
+
+  yargs@17.7.2:
+    dependencies:
+      cliui: 8.0.1
+      escalade: 3.2.0
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 21.1.1
 
   yn@3.1.1: {}
 

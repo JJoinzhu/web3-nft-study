@@ -1,4 +1,5 @@
 import hre from "hardhat";
+import { developmentChains, networkConfig } from "../helper-hardhat-config.js";
 
 const deployNFTPoolBurnAndMint = async ({ deployments, getNamedAccounts }) => {
   const { deploy, log } = deployments;
@@ -6,11 +7,18 @@ const deployNFTPoolBurnAndMint = async ({ deployments, getNamedAccounts }) => {
 
   log("Deploying NFTPoolBurnAndMint contract...");
 
-  const ccipSimulatorDeployment = await deployments.get("CCIPLocalSimulator");
-  const ccipSimulator = await hre.ethers.getContractAt("CCIPLocalSimulator", ccipSimulatorDeployment.address);
-  const ccipConfig = await ccipSimulator.configuration();
-  const destinationRouter = ccipConfig.destinationRouter_;
-  const linkToken = ccipConfig.linkToken_;
+  let destinationRouter, linkToken;
+  if (developmentChains.includes(hre.network.name)) {
+    const ccipSimulatorDeployment = await deployments.get("CCIPLocalSimulator");
+    const ccipSimulator = await hre.ethers.getContractAt("CCIPLocalSimulator", ccipSimulatorDeployment.address);
+    const ccipConfig = await ccipSimulator.configuration();
+    destinationRouter = ccipConfig.destinationRouter_;
+    linkToken = ccipConfig.linkToken_;
+  } else {
+    destinationRouter = networkConfig[hre.network.config.chainId].sourceRouter;
+    linkToken = networkConfig[hre.network.config.chainId].linkToken;
+  }
+
   const wnftDeployment = await deployments.get("WrappedMyToken");
   const wnftAddr = wnftDeployment.address;
 
